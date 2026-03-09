@@ -1,0 +1,188 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <style>
+        body {
+            background: #fcefc4;
+            font-family: Arial;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 70%;
+            margin: 50px auto;
+            display: flex;
+            border-radius: 25px;
+            background: #fff;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .left {
+            width: 50%;
+            padding: 20px;
+        }
+
+        .right {
+            width: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .right img {
+            width: 100%;
+            border-radius: 20px;
+            object-fit: cover;
+        }
+
+        .input-box {
+            width: 80%;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            background: #1E5132;
+            color: white;
+            font-size: 18px;
+            border-radius: 30px;
+            cursor: pointer;
+            
+        }
+
+        .btn:hover {
+            background-color:rgb(127, 194, 11);
+        }
+
+        .link {
+            text-align: center;
+            margin-top: 10px;
+           
+        }
+
+        .link a {
+            color: black;
+            text-decoration: none;
+            
+        }
+
+        /* 💡 Responsive for tablets and mobiles */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                width: 90%;
+                padding: 20px;
+            }
+
+            .left, .right {
+                width: 100%;
+                padding: 10px;
+            }
+
+            .right img {
+                width: 100%;
+                height: auto;
+                margin-top: 20px;
+            }
+
+            .btn {
+                font-size: 16px;
+                padding: 10px;
+            }
+
+            .input-box {
+                font-size: 15px;
+                padding: 12px;
+                border-radius: 5px;
+            }
+        }
+
+        /* 💡 Extra small screen (mobile under 480px) */
+        @media (max-width: 480px) {
+            h2 {
+                font-size: 22px;
+            }
+
+            .container {
+                padding: 15px;
+                border-radius: 15px;
+            }
+
+            .btn {
+                font-size: 15px;
+                padding: 10px;
+            }
+
+            .input-box {
+                font-size: 14px;
+                padding: 10px;
+               
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left">
+            <h2 style="text-align:center;color:#1E5132;font-weight: bold;font-size: 30px;">Login</h2>
+
+            <form method="POST">{% csrf_token %}
+                <input type="email" placeholder="Enter Your Email Id" name="email" class="input-box" required>
+                <input type="password" placeholder="Enter Your Password" name="password" class="input-box" required><br>
+                <input type="checkbox" style="margin-bottom: 20px;" required> I Agree To The Terms & Policy
+
+                <button class="btn">LOGIN</button>
+
+                <div class="link">
+                    <a href="{% url 'signup' %}">Signup</a> | 
+                    <a href="{% url 'forgot_password' %}">Forget Password</a><br><br>
+                    
+                    (Or)<br>
+                    <button type="button" class="input-box" style="background:#f2f2f2;cursor:pointer;border-radius: 15px;color: #1E5132;width: auto;">Continue With Google</button>
+                </div>
+{% if messages %}
+    <div style="margin-top: 10px; text-align:center;">
+        {% for message in messages %}
+            <p style="
+                padding: 10px; 
+                border-radius: 8px; 
+                font-weight: bold; 
+                width: 90%; 
+                margin: 5px auto;
+                {% if message.tags == 'error' %}
+                    background: #ffdddd; 
+                    color: #d60000; 
+                    border: 1px solid #d60000;
+                {% elif message.tags == 'success' %}
+                    background: #ddffdd; 
+                    color: #007a1e; 
+                    border: 1px solid #007a1e;
+                {% endif %}
+            ">
+                {{ message }}
+            </p>
+        {% endfor %}
+    </div>
+{% endif %}
+
+                
+
+                
+        </div>
+
+        <div class="right">
+            <img src="{% static 'images/l.png' %}" alt="Login Image">
+        </div>
+    </div>
+</body>
+</html>

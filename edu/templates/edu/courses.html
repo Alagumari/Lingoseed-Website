@@ -1,0 +1,225 @@
+{% extends 'edu/base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+body {
+    background: #fbf1d4;
+}
+
+h2 {
+    text-align: center;
+    color: white;
+    font-weight: bold;
+}
+
+/* ✅ Course Cards */
+.course-card {
+    display: flex;
+    align-items: center;
+    border-radius: 30px;
+    padding: 30px;
+    margin: 40px 0;
+    gap: 30px;
+    color: #fff;
+}
+
+.course-card.green {
+    background: #1f4f33;
+    border: 5px solid #245131;
+}
+
+.course-card.light-green {
+    background:#6cac0cb6;
+    border: 5px solid #6cac0cb6;
+}
+
+.course-card.yellow {
+    background: #f2d16b;
+    border: 5px solid #e0c060;
+    color: #000;
+}
+
+.course-card.reverse {
+    flex-direction: row-reverse;
+}
+
+.course-image img {
+    width: 460px;
+    height: 270px;
+    object-fit: cover;
+    border-radius: 20px;
+    border: 5px solid #245131;
+}
+
+.course-info {
+    flex: 1;
+}
+
+.course-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.btn {
+    background: #ffedc6;
+    color: #000;
+    padding: 12px 40px;
+    border-radius: 25px;
+    border: none;
+    font-weight: 700;
+    font-size: 18px;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background:peachpuff;
+    color: #000;
+}
+.teacher-box.green { background: #2f5d3b; }
+.teacher-box.light-green { background:#6cac0cb6 ; }
+.teacher-box.yellow { background: #f2d16b; color: #000; }
+
+
+/* ✅ Teacher Training */
+.teacher-box {
+    max-width: 1080px;
+    margin: auto;
+    background: #2f5d3b;
+    border-radius: 25px;
+    padding: 30px;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.teacher-box img {
+    width: 100%;
+    height: 300px;
+    border-radius: 20px;
+    object-fit: cover;
+}
+
+.teacher-register {
+    background: #f2e8c6;
+    padding: 10px 35px;
+    border-radius: 20px;
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 15px;
+}
+
+/* ✅ Responsive Design */
+@media (max-width: 768px) {
+    .teacher-box, .course-card {
+        flex-direction: column !important;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .teacher-box img, .course-image img {
+        width: 100%;
+        height: auto;
+        margin-bottom: 15px;
+    }
+
+    .teacher-register, .btn {
+        padding: 10px 25px;
+        font-size: 16px;
+    }
+
+    .course-title {
+        font-size: 22px;
+    }
+}
+
+@media (max-width: 480px) {
+    .teacher-box img {
+        height: 200px;
+    }
+    .teacher-box {
+        padding: 15px;
+        gap: 15px;
+    }
+}
+</style>
+
+<!-- ✅ Page Header -->
+<div style="text-align:center; padding:30px 0;">
+    <h2 class="section-heading" style="color: #000;">Explore All LingoSeed Courses</h2>
+    <p style="font-size:20px;">Practical English programs for kids, adults, and teachers — from phonics to professional communication.</p>
+</div>
+
+<!-- ✅ Kids Courses -->
+<h2 style="color: #1f4f33; font-weight: bold;">Kids Courses</h2>
+<br>
+<div class="container">
+{% for course in courses %}
+    <div class="course-card {% if forloop.counter|divisibleby:2 %}reverse{% endif %} 
+        {% cycle 'green' 'light-green' 'yellow' %}">
+        <div class="course-image">
+            <img src="{{ course.image.url }}" alt="{{ course.title }}">
+        </div>
+        <div class="course-info">
+            <h2 class="course-title">{{ course.title }}</h2>
+            <p><strong>Level :</strong> {{ course.level }}</p>
+            <p><strong>Duration:</strong> {{ course.duration }}</p>
+            <p>{{ course.short_description }}</p>
+            <p><strong>Fee:</strong> ₹{{ course.price }} Per month</p>
+            <a href="{% url 'register_course' course.id %}" class="btn">Register</a>
+        </div>
+    </div>
+{% endfor %}
+</div>
+
+<!-- ✅ Teacher Training -->
+<hr style="margin: 40px 0; border: none; height: 2px; background: #e0d7b8;">
+<h2 style="color: #1f4f33;">Teacher Training</h2>
+<br>
+{% for t in teacher_courses %}
+<div class="teacher-box {% cycle 'green' 'light-green' 'yellow' %}">
+    <div style="flex:1;">
+        <img src="{{ t.image.url }}">
+    </div>
+    <div style="flex:1;">
+        <h2 style="font-weight:bold; font-size:26px; color: white;">{{ t.title }}</h2>
+        <p>{{ t.description }}</p>
+        <p><b>Duration:</b> {{ t.duration }}</p>
+        <p><b>Outcomes:</b> {{ t.outcomes }}</p>
+        {% if t.fee %}
+        <p><b>Fee:</b> ₹{{ t.price }}</p>
+        {% endif %}
+        <a href="{% url 'register_course' t.id %}" class="btn">Register</a>
+    </div>
+</div>
+{% endfor %}
+
+<!-- ✅ Adults Courses -->
+<hr style="margin: 40px 0; border: none; height: 2px; background: #e0d7b8;">
+<h2 style="color: #1f4f33;">Adults Courses</h2>
+<br>
+
+<div class="container">
+{% for a in adults %}
+<div class="course-card {% if forloop.counter|divisibleby:2 %}reverse{% endif %} 
+    {% cycle 'green' 'light-green' 'yellow' %}">
+    <div class="course-image"><img src="{{ a.image.url }}" alt="{{ a.title }}"></div>
+    <div class="course-info">
+        <h2 class="course-title">{{ a.title }}</h2>
+        <p>{{ a.description }}</p>
+        <p><b>Duration:</b> {{ a.duration }}</p>
+        <p><b>Fee:</b> ₹{{ a.price }}</p>
+        <a href="{% url 'register_course' a.id %}" class="btn">Register</a>
+    </div>
+</div>
+{% endfor %}
+</div>
+
+{% endblock %}

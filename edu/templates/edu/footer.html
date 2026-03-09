@@ -1,0 +1,107 @@
+{% load static %}
+
+<style>
+.bg-dark-green {
+    background-color: #1f4934;
+}
+h4, h5 {
+    color: #f7f8a2;
+}
+.footer-link {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 600;
+}
+.footer-link:hover {
+    text-decoration: underline;
+    color: #f9d97a;
+}
+.footer i {
+    margin-right: 6px;
+    font-size: 18px;
+}
+
+/* Keep icon + text in one line */
+.footer p {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 8px;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Adjust column spacing for better alignment */
+.footer .row > div {
+    min-width: 220px;
+}
+</style>
+
+<footer class="footer bg-dark-green text-white pt-5 pb-3">
+<div class="container">
+    <div class="row gy-4 justify-content-between">
+
+        <!-- Logo + Tagline -->
+        <div class="col-md-3 text-center text-md-start">
+            <img src="{% static 'images/logo.png' %}" width="130" alt="logo" class="mb-2">
+            <h4 class="fw-bold mt-2">LINGOSEED</h4>
+            <p class="small mb-0">Empowering educators,<br> inspiring learning</p>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="col-md-2 col-6">
+            <h5 class="fw-bold mb-3">Quick Links</h5>
+            <p><a href="{% url 'home' %}" class="footer-link">Home</a></p>
+            <p><a href="{% url 'about' %}" class="footer-link">About</a></p>
+            <p><a href="{% url 'courses' %}" class="footer-link">Courses</a></p>
+            <p><a href="{% url 'contact' %}" class="footer-link">Contact</a></p>
+        </div>
+
+        <!-- ✅ Courses Section -->
+<div class="col-md-3 col-6">
+    <h5 class="fw-bold mb-3">Courses</h5>
+    <p><a href="{% url 'courses' %}" class="footer-link">Spoken English</a></p>
+    <p><a href="{% url 'courses' %}" class="footer-link">Phonics for kids</a></p>
+    <p><a href="{% url 'courses' %}" class="footer-link">Montessori Training</a></p>
+    <p><a href="{% url 'courses' %}" class="footer-link">Grammar & Writing Skills</a></p>
+    <p><a href="{% url 'courses' %}" class="footer-link">IELTS & Competitive Exams</a></p>
+    <p><a href="{% url 'courses' %}" class="footer-link">Personality Development</a></p>
+</div>
+
+        <!-- ✅ Contact (Clickable mail, phone, instagram) -->
+        <div class="col-md-3">
+            <h5 class="fw-bold mb-3">Contact Us</h5>
+
+            {% if contact.email %}
+            <p>
+                <i class="bi bi-envelope-fill"></i>
+                <a href="mailto:{{ contact.email }}" class="footer-link">{{ contact.email }}</a>
+            </p>
+            {% endif %}
+
+            {% if contact.phone %}
+            <p>
+                <i class="bi bi-telephone-fill"></i>
+                <a href="tel:{{ contact.phone }}" class="footer-link">{{ contact.phone }}</a>
+            </p>
+            {% endif %}
+
+            {% if contact.instagram %}
+            <p>
+                <i class="bi bi-instagram"></i>
+                <a href="https://www.instagram.com/{{ contact.instagram }}" target="_blank" class="footer-link">{{ contact.instagram }}</a>
+            </p>
+            {% endif %}
+        </div>
+
+    </div>
+
+    <hr class="border-light">
+
+    <div class="text-center small">
+        © 2025 LingoSeed Global English Academy. All rights reserved.
+    </div>
+</div>
+</footer>

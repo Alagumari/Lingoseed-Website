@@ -1,0 +1,170 @@
+{% extends 'edu/base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+body {
+    background: #ffedc6; /* Figma yellow background */
+}
+
+/* .register-container {
+    display: flex;
+    max-width: 1200px;
+    margin: 50px auto;
+    background:#1f4f33;
+    border-radius: 20px #1f4f33;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    color: white;
+} */
+ .register-container {
+    display: flex;
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 0 20px; /* ✅ Add horizontal padding */
+    background: #1f4f33;
+    border-radius: 50px #1f4f33;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    color: white;
+}
+
+
+.register-form {
+    flex: 1;
+    padding: 40px;
+}
+
+.register-form h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #1f4f33;
+    text-align: center;
+    font-weight: 800;
+}
+
+.register-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.register-form input, .register-form textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    border: 2px solid #1f4f33;
+    font-size: 16px;
+}
+
+.register-form button {
+    width: 100%;
+   
+    color:black;
+    padding: 12px;
+    border-radius: 20px;
+    
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.register-form button{
+    background:blanchedalmond;
+}
+
+.register-form button:hover {
+    background:bisque;
+}
+
+/* Right-side image */
+.register-image {
+    flex: 1;
+    background: url("{% static 'images/image.png' %}") no-repeat center center;
+    border-radius: 15px #1f4f33;
+    background-size: cover;
+}
+/* 🔴 Force visible error text */
+.error {
+    color: #ff0000 !important;      /* bright red text */
+      /* white background for clarity */
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+
+
+
+/* Responsive */
+@media (max-width: 768px) {
+    .register-container {
+        flex-direction: column;
+    }
+    .register-image {
+        height: 250px;
+    }
+}
+@media (max-width: 768px) {
+    .register-container {
+        flex-direction: column;
+        padding: 0 10px; /* less padding on mobile */
+    }
+    .register-image {
+        height: 250px;
+    }
+}
+
+</style>
+<h2 style="text-align: center;font-weight: 900;">START YOUR LEARNING JOURNEY WITH LINGOSEED!</h2>
+        <p style="text-align:center; font-weight:bold; margin-bottom:25px;">"EVERY LEARNER DESERVES A CONFIDENT START - LET'S GROW TOGETHER AT LINGOSEED GLOBAL ENGLISH ACADEMY".</p>
+<div class="register-container">
+    <!-- Form Section -->
+    <div class="register-form">
+        
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <label>Name*</label>
+            <input type="text" name="name" value="{{ request.POST.name }}">
+            {% if errors.name %}<div class="error">{{ errors.name }}</div>{% endif %}
+
+            <label>Email*</label>
+            <input type="email" name="email" value="{{ request.POST.email }}">
+            {% if errors.email %}<div class="error">{{ errors.email }}</div>{% endif %}
+
+            <label>Mobile Number*</label>
+            <input type="text" name="mobile" value="{{ request.POST.mobile }}">
+            {% if errors.mobile %}<div class="error">{{ errors.mobile }}</div>{% endif %}
+
+            <label>Age*</label>
+            <input type="number" name="age" value="{{ request.POST.age }}">
+            {% if errors.age %}<div class="error">{{ errors.age }}</div>{% endif %}
+
+            <label>Enter Your Course*</label>
+            <input type="text" name="course" value="{{ request.POST.course }}">
+            {% if errors.course %}<div class="error">{{ errors.course }}</div>{% endif %}
+
+             <label>Mode of Learning</label>
+    <div class="radio-group">
+        <label>ONLINE</label>
+        <input type="radio" name="mode" value="ONLINE"  {% if request.POST.mode == 'ONLINE' %}checked{% endif %}>
+        <label>OFFLINE</label>
+         <input type="radio" name="mode" value="OFFLINE" {% if request.POST.mode == 'OFFLINE' %}checked{% endif %}>
+    </div>
+
+            <label for="message">Message</label>
+            <textarea name="message" cols="30" rows="4">{{ request.POST.message }}</textarea>
+
+            <button type="submit">Enroll Now</button>
+        </form>
+    </div>
+
+    <!-- Right-side Image -->
+    <div class="register-image"></div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,135 @@
+{% extends 'edu/base.html' %}
+
+
+{% load custom_filters %}
+{% load static %}
+
+{% block content %}
+
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-text">
+        <h1>{{ content.heading }}</h1>
+        <p>{{ content.sub_heading }}</p>
+        <!-- <a href="#" class="explore-btn">{{ content.button_text }}</a> -->
+         <a href="{% url 'courses' %}" class="explore-btn" >{{ content.button_text }}</a>
+
+    </div>
+    <div class="hero-image">
+        <img src="{{ content.hero_image.url }}" alt="Hero Image">
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="about-section">
+  <div class="about-wrapper">
+    
+    <div class="about-img">
+      <img src="{{ about.image.url }}" alt="About Image">
+    </div>
+
+    <div class="about-content">
+      <h2>{{ about.title }}</h2>
+      <p>{{ about.description1 }}</p>
+      {% if about.description2 %}
+      <p>{{ about.description2 }}</p>
+      {% endif %}
+    </div>
+
+  </div>
+
+  <div class="about-features">
+    <div class="feature-box">
+      <img src="{% static 'icons/trainer.png' %}" class="icon">
+      <span>{{ about.trainer_text }}</span>
+    </div>
+
+    <div class="feature-box">
+      <img src="{% static 'icons/skill.png' %}" class="icon">
+      <span>{{ about.skill_text }}</span>
+    </div>
+
+    <div class="feature-box">
+      <img src="{% static 'icons/global.png' %}" class="icon">
+      <span>{{ about.global_text }}</span>
+    </div>
+  </div>
+</section>
+
+<!-- OUR PROGRAMS -->
+<!-- OUR PROGRAMS -->
+<section class="programs-section">
+  <h2>OUR PROGRAMS</h2>
+  <div class="program-grid">
+    {% for program in programs %}
+    <div class="program-card {% cycle 'dark' 'light' 'dark' 'light' 'dark' 'light' %}">
+      <h3>✯ {{ program.title|upper }} ✯</h3>
+      <p>{{ program.description }}</p>
+      <!-- Updated Learn More button -->
+      <a href="{% url 'courses' %}" class="program-btn" style="color: black;text-decoration: none;">{{ program.button_text }}</a>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+
+
+<!-- WHY CHOOSE US -->
+<section class="why-section">
+    <h2 class="why-title">WHY CHOOSE LINGOSEED?</h2>
+    <div class="why-container">
+        {% for item in why %}
+        <div class="why-box">
+            <div class="why-icon-wrap">
+                <img src="{{ item.icon.url }}" alt="{{ item.title }}" class="why-icon">
+            </div>
+            <h3>{{ item.title }}</h3>
+            <p>{{ item.description }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonial-section">
+    <h2 class="testimonial-heading">WHAT OUR LEARNERS SAY</h2>
+
+    <div class="testimonial-container">
+        {% for item in testimonials %}
+        <div class="testimonial-box" style="{% if forloop.first %}display:block;{% else %}display:none;{% endif %}">
+            <div class="left-tag">
+                <h3>OUR LEARNER SAYS</h3>
+                <p>REVIEW</p>
+                <div class="stars">
+                    {% for i in "12345"|slice:":item.stars" %}★{% endfor %}
+                </div>
+            </div>
+
+            <div class="content-box">
+                <p class="message">“{{ item.review }}”</p>
+                <p class="author">— {{ item.name }}, {{ item.designation }}</p>
+            </div>
+
+            <img src="{{ item.image.url }}" class="profile-img">
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- JS for auto change every 2 sec -->
+<script>
+let index = 0;
+const testimonials = document.querySelectorAll('.testimonial-box');
+
+function showNextTestimonial() {
+    testimonials.forEach((box, i) => {
+        box.style.display = (i === index) ? 'block' : 'none';
+    });
+    index = (index + 1) % testimonials.length;
+}
+setInterval(showNextTestimonial, 2000); // 2 seconds interval
+</script>
+
+
+{% endblock %}

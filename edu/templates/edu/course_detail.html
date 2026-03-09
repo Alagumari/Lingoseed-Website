@@ -1,0 +1,300 @@
+{% extends "edu/base.html" %}
+{% load static %}
+{% block content %}
+
+<style>
+/* Page colors based on your screenshots */
+:root{
+  --green:#214f33;
+  --light:#fbf1d4;
+  --accent:#6ca16e; /* lighter green */
+}
+
+/* Page wrapper */
+.course-page {
+  background: var(--light);
+  padding-bottom: 80px;
+}
+
+/* Hero title */
+.course-hero {
+  text-align: center;
+  padding: 30px 20px 10px;
+}
+.course-hero h1{
+  color: var(--green);
+  font-size: 38px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+/* top section: image left, overview right */
+.top-section {
+  max-width: 1100px;
+  margin: 20px auto;
+  display: flex;
+  gap: 30px;
+  align-items: center;
+}
+.top-left img {
+  width: 520px;
+  max-width: 100%;
+  border-radius: 16px;
+  border: 6px solid #245131;
+  object-fit: cover;
+}
+.top-right {
+  flex:1;
+  color: #000;
+}
+.top-right h3 {
+  color: var(--green);
+  font-size: 26px;
+  margin-bottom: 10px;
+  font-weight:700;
+}
+.top-right p { font-size:16px; line-height:1.6; color:#0b0b0b; }
+
+/* WHAT YOUR CHILD WILL LEARN - dark green band */
+.learn-band {
+  background: var(--green);
+  color: #fff;
+  padding: 40px 0;
+  margin-top: 30px;
+}
+.learn-inner {
+  max-width:1100px;
+  margin: 0 auto;
+  display:flex;
+  gap:20px;
+  align-items:center;
+  justify-content:space-between;
+  padding: 0 20px;
+}
+.learn-left {
+  flex:1;
+}
+.learn-left h2{ font-size:32px; font-weight:800; color:#fff; margin-bottom:15px;}
+.learn-left ul{ font-size:18px; line-height:1.8; }
+.learn-right img{ width:320px; max-width:40%; border-radius:8px; }
+
+/* KEY FEATURES section (cream bg) */
+.features {
+  max-width:1100px;
+  margin: 30px auto;
+  padding: 40px 20px;
+  text-align:left;
+}
+.features h2 {
+  text-align:center;
+  color: var(--green);
+  font-size:32px;
+  font-weight:800;
+  margin-bottom:30px;
+}
+.feature-row{ display:flex; gap:20px; align-items:center; justify-content:space-between; flex-wrap:wrap;}
+.feature-item {
+  width:48%;
+  display:flex;
+  gap:16px;
+  align-items:flex-start;
+  margin-bottom:24px;
+}
+.feature-item .icon-wrap{
+  width:72px;height:72px;border-radius:12px;background:#f2f1e6;display:flex;align-items:center;justify-content:center;font-size:30px;
+}
+.feature-item h4{ margin:0; font-size:22px; color:#133a24; font-weight:800;}
+.feature-item p{ margin:4px 0 0; color:#133a24; font-weight:600; }
+
+/* Course detail band (dark green) */
+.course-details-band {
+  background: var(--green);
+  color: #fff;
+  padding: 30px 0;
+  margin-top: 20px;
+}
+.course-details-inner {
+  max-width:1100px;
+  margin: 0 auto;
+  display:flex;
+  gap:30px;
+  align-items:center;
+  justify-content:center;
+  padding: 0 20px;
+}
+.course-details-left img{
+  width:260px; border-radius:12px; object-fit:cover;
+}
+.course-details-right {
+  flex:1; font-weight:700; font-size:20px;
+}
+.enroll-btn {
+  display:block;
+  width:260px;
+  margin:24px auto 0;
+  padding:14px 24px;
+  background: #2f5d3b;
+  color:#fff;
+  border-radius:30px;
+  text-align:center;
+  text-decoration:none;
+  font-weight:800;
+  letter-spacing:1px;
+  border:4px solid #2f5d3b;
+}
+.enroll-btn:hover { background:#1e3f2a; color:#fff; }
+
+/* FAQ section */
+.faqs {
+  max-width:1100px;
+  margin: 40px auto;
+  padding: 10px 20px;
+}
+.faqs h2 { text-align:center; color:var(--green); font-size:32px; font-weight:800; margin-bottom:18px; }
+.faq-item { background:#2f5d3b; color:#fff; padding:16px; border-radius:4px; margin-bottom:10px; }
+.faq-item h5{ margin:0; font-size:18px; font-weight:800; }
+.faq-item p{ margin:8px 0 0; font-size:15px; color:#fff;}
+
+/* Testimonials */
+.testimonial-wrap { max-width:1100px; margin:40px auto; padding: 20px; }
+.testimonial-card { background:#fff; padding:30px; border-radius:8px; box-shadow:0 6px 20px rgba(0,0,0,0.08); }
+
+/* Responsive */
+@media (max-width: 992px){
+  .top-section, .learn-inner, .course-details-inner { flex-direction: column; text-align:left; }
+  .learn-right img { max-width:100%; margin-top:20px; }
+  .feature-item { width:100%; }
+  .top-left img { max-width:100%; }
+  .course-details-left img { margin: 0 auto; }
+  .enroll-btn { width:100%; }
+}
+</style>
+
+<div class="course-page">
+
+  <!-- HERO TITLE -->
+  <section class="course-hero">
+    <h1>{{ course.title }} {% if course.subtitle %}| {{ course.subtitle }}{% endif %}</h1>
+  </section>
+
+  <!-- TOP: image & overview -->
+  <section class="top-section">
+    <div class="top-left">
+      {% if course.image1 %}<img src="{{ course.image1.url }}" alt="{{ course.title }} image">{% endif %}
+    </div>
+    <div class="top-right">
+      <h3>Course Overview</h3>
+      <p>{{ course.overview|linebreaksbr }}</p>
+    </div>
+  </section>
+
+  <!-- WHAT YOUR CHILD WILL LEARN -->
+  <section class="learn-band">
+    <div class="learn-inner">
+      <div class="learn-left">
+        <h2>WHAT YOUR CHILD WILL LEARN</h2>
+        <ul>
+          {% for p in learn_points %}
+            <li>{{ p }}</li>
+          {% empty %}
+            <li>Course learning outcomes will be updated soon.</li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="learn-right">
+        {% if course.image2 %}
+          <img src="{{ course.image2.url }}" alt="learning image">
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+  <!-- KEY FEATURES -->
+  <section class="features">
+    <h2>KEY FEATURES</h2>
+    <div class="feature-row">
+      {% for f in key_features %}
+        <div class="feature-item">
+          <div class="icon-wrap">
+            {% if f.icon %}
+              <!-- if icon stored as emoji or small image name -->
+              {{ f.icon }}
+            {% else %}
+              ⭐
+            {% endif %}
+          </div>
+          <div>
+            <h4>{{ f.heading }}</h4>
+            <p>{{ f.desc }}</p>
+          </div>
+        </div>
+      {% empty %}
+        <p style="text-align:center;color:#666;">Key features will be added soon.</p>
+      {% endfor %}
+
+      <!-- right side image -->
+      <div style="width:48%; display:flex; align-items:center; justify-content:center;">
+        {% if course.image3 %}
+          <img src="{{ course.image3.url }}" alt="feature image" style="width:100%; border-radius:12px; max-width:420px;">
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+  <!-- COURSE DETAILS BAND -->
+  <section class="course-details-band">
+    <div class="course-details-inner">
+      <div class="course-details-left">
+        {% if course.image4 %}
+          <img src="{{ course.image4.url }}" alt="course small image">
+        {% endif %}
+      </div>
+      <div class="course-details-right">
+        <div>Level: {{ course.level }}</div>
+        <div>Duration: {{ course.duration }}</div>
+        <div>Schedule: {{ course.schedule }}</div>
+        <div>Fee: ₹{{ course.fee }}</div>
+        <div>Mode: {{ course.mode }}</div>
+
+        <a href="{% url 'enroll_course' course.id %}" class="enroll-btn">ENROLL NOW</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ's -->
+  <section class="faqs">
+    <h2>FAQ'S</h2>
+    {% for faq in faqs %}
+      <div class="faq-item">
+        <h5>{{ forloop.counter }}. {{ faq.question }}</h5>
+        <p>{{ faq.answer }}</p>
+      </div>
+    {% empty %}
+      <p style="text-align:center;color:#666;">No FAQs yet.</p>
+    {% endfor %}
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonial-wrap">
+    <h2 style="text-align:center; color:var(--green); font-weight:800;">WHAT OUR LEARNERS SAY</h2>
+    {% for t in testimonials %}
+      <div class="testimonial-card">
+        <div style="display:flex;gap:20px;align-items:center;">
+          <div style="flex:1;">
+            <blockquote style="font-size:18px; font-weight:700;">“{{ t.text }}”</blockquote>
+            <div style="margin-top:10px; font-weight:800;">— {{ t.author }}</div>
+          </div>
+          {% if t.photo %}
+          <div style="width:120px;">
+            <img src="{{ t.photo.url }}" style="width:120px;height:120px;border-radius:50%;object-fit:cover;">
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    {% empty %}
+      <p style="text-align:center;color:#666;">No testimonials yet.</p>
+    {% endfor %}
+  </section>
+
+</div>
+{% endblock %}

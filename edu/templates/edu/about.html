@@ -1,0 +1,301 @@
+{% extends 'edu/base.html' %}
+
+
+{% block content %}
+
+<style>
+    .about-wrapper {
+        background-color: #f8f1d5; /* Light cream background */
+        padding: 60px 0;
+        
+    }
+
+    .about-title {
+        text-align: center;
+        font-weight: 700;
+        margin-bottom: 40px;
+        font-size: 32px;
+        color: #000;
+        font-size: 40px;
+    }
+
+    .about-text p {
+        font-size: 25px;
+        line-height: 1.8;
+        color: #000;
+    }
+
+    .explore-btn {
+        background-color: #2e6248;
+        color: #fff;
+        font-weight: 600;
+        border-radius: 30px;
+        padding: 12px 30px;
+        display: inline-block;
+        margin-top: 20px;
+        text-decoration: none;
+    }
+
+    .explore-btn:hover {
+        background-color: rgba(144, 238, 144, 0.904);
+        color: #fff;
+    }
+    .team-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100%; /* make parent flex fill height */
+    color: black;
+    gap: 5px;
+    border: 5px;
+}
+
+.team-photo {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 5px solid #1e4d2b;
+    margin: 0 auto;
+}
+
+.row > .col-md-4.d-flex {
+    display: flex;
+    align-items: stretch; /* stretch all cards to same height */
+}
+
+
+    .btn-approach {
+    background: #1e4d2b;
+    padding: 12px 35px;
+    color: #fff;
+    border-radius: 30px;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 18px;
+    transition: 0.3s; /* smooth hover effect */
+}
+
+.btn-approach:hover {
+    background:rgba(144, 238, 144, 0.904) ; /* hover color */
+    color: #fff; /* text color on hover */
+    transform: scale(1.05); /* optional: slight zoom effect */
+}
+
+    .teacher-img {
+        width: 100%;
+        max-width: 380px;
+    }
+
+    @media (max-width: 768px) {
+        .about-title {
+            font-size: 26px;
+        }
+        .about-text {
+            text-align: center;
+        }
+        .teacher-img {
+            margin-bottom: 20px;
+        }
+    }
+</style>
+
+<div class="about-wrapper">
+    <div class="container">
+
+        <h2 class="about-title">{{ about.title }}</h2>
+
+        <div class="row align-items-center justify-content-center">
+
+            <div class="col-md-5 text-center">
+                {% if about.teacher_image %}
+                    <img src="{{ about.teacher_image.url }}" alt="Teacher" class="teacher-img">
+                {% else %}
+                    <img src="https://via.placeholder.com/380x380" class="teacher-img">
+                {% endif %}
+            </div>
+
+            <div class="col-md-7 about-text">
+                {% if about.subtitle %}
+                <p><strong>{{ about.subtitle }}</strong></p>
+                {% endif %}
+
+                <p>{{ about.description|linebreaksbr }}</p>
+
+                {% if about.button_link %}
+                <!-- <a href="{{ about.button_link }}" class="explore-btn">
+                    {{ about.button_text }}
+                </a> -->
+                <a href="{% url 'courses' %}" class="explore-btn">
+    {{ about.button_text }}
+</a>
+
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="our-story-section">
+   <h2 class="story-title" style="color:#f8f1d5; font-weight:700;">
+    {{ story.title }}
+</h2>
+
+    <div class="story-container">
+        <div class="story-text">
+            {{ story.description }}
+        </div>
+
+        <div class="story-img">
+            <img src="{{ story.image.url }}" alt="Our Story">
+        </div>
+    </div>
+</section>
+
+<!-- <section class="story-section py-5">
+  <div class="container text-center">
+
+    <h2 class="story-title">{{ story.mission_title }}</h2>
+    <p class="story-description mt-3">{{ story.mission_description }}</p>
+
+    <h2 class="story-title mt-5">{{ story.vision_title }}</h2>
+
+    <div class="row vision-boxes mt-4">
+      <div class="col-md-4">
+        <div class="vision-card">
+          <img src="{{ story.icon1.url }}" class="vision-icon" alt="">
+          <p>{{ story.vision_text }}</p>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="vision-card">
+          <img src="{{ story.icon2.url }}" class="vision-icon" alt="">
+          <p>{{ story.approach_text }}</p>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="vision-card">
+          <img src="{{ story.icon3.url }}" class="vision-icon" alt="">
+          <p>{{ story.values_text }}</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section> -->
+<section class="story-section py-5" style="background:#f8f1d5;">
+  <div class="container text-center">
+
+    {% if story_section.mission_title %}
+    <h2 class="story-title">{{ story_section.mission_title }}</h2>
+    {% endif %}
+
+    {% if story_section.mission_description %}
+    <p class="story-description mt-3">{{ story_section.mission_description }}</p>
+    {% endif %}
+
+    {% if story_section.vision_title %}
+    <h2 class="story-title mt-5">{{ story_section.vision_title }}</h2>
+    {% endif %}
+
+    <div class="row vision-boxes mt-4">
+
+      <!-- Card 1 -->
+      <div class="col-md-4">
+        <div class="vision-card p-4 shadow-sm rounded-3">
+
+          {% if story_section.icon1 %}
+            <img src="{{ story_section.icon1.url }}" class="vision-icon mb-3" alt="">
+          {% else %}
+            <img src="https://via.placeholder.com/80?text=Icon" class="vision-icon mb-3" alt="">
+          {% endif %}
+
+          <p class="vision-text">{{ story_section.vision_text }}</p>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="col-md-4">
+        <div class="vision-card p-4 shadow-sm rounded-3" style="background-color: #6cac0cb6;">
+
+          {% if story_section.icon2 %}
+            <img src="{{ story_section.icon2.url }}" class="vision-icon mb-3" alt="">
+          {% else %}
+            <img src="https://via.placeholder.com/80?text=Icon" class="vision-icon mb-3" alt="">
+          {% endif %}
+
+          <p class="vision-text">{{ story_section.approach_text }}</p>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="col-md-4">
+        <div class="vision-card p-4 shadow-sm rounded-3">
+
+          {% if story_section.icon3 %}
+            <img src="{{ story_section.icon3.url }}" class="vision-icon mb-3" alt="">
+          {% else %}
+            <img src="https://via.placeholder.com/80?text=Icon" class="vision-icon mb-3" alt="">
+          {% endif %}
+
+          <p class="vision-text">{{ story_section.values_text }}</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Meet the Team -->
+<div class="row justify-content-center" style="background-color:#f8f1d5 ;">
+  {% for member in team %}
+  <div class="col-md-4 mb-5 d-flex">
+    <div class="team-card p-4 text-center w-100">
+      <img src="{{ member.photo.url }}" class="team-photo">
+      <h3 style="font-weight: bold;">{{ member.name }}</h3>
+      <h5 style="color: #000;font-weight: bold;">{{ member.designation }}</h5>
+      <p style="font-weight: bold;">{{ member.description }}</p>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+
+
+
+<!-- Our Approach Section -->
+<section style="background:#fcf5d7; padding:80px 0;">
+  <div class="container text-center">
+
+    <h2 style="font-weight:700; color:#1e4d2b; font-size:36px;">
+      {{ approach.title }}
+    </h2>
+
+    <h3 style="font-weight:700; font-size:30px; margin-top:12px;">
+      {{ approach.subtitle }}
+    </h3>
+
+    <p style="max-width:850px; margin:20px auto; font-size:18px; line-height:1.7;">
+      {{ approach.description }}
+    </p>
+
+    <!-- <a href="{{ approach.button_link }}"
+       style="background:#1e4d2b; padding:12px 35px; color:#fff; border-radius:30px; font-weight:600; text-decoration:none; font-size:18px;">
+       {{ approach.button_text }}
+    </a> -->
+    <a href="{% url 'courses' %}" class="btn-approach">
+    {{ approach.button_text }}
+</a>
+
+
+  </div>
+</section>
+
+
+
+{% endblock %}

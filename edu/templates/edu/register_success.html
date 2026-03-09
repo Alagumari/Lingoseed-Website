@@ -1,0 +1,44 @@
+{% extends 'edu/base.html' %}
+{% block content %}
+
+<style>
+.success-container {
+    text-align: center;
+    margin: 120px auto;
+    padding-bottom: 100px; /* adds spacing above footer */
+}
+.success-container h2 {
+    color: #1f4f33;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+.success-container p {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 40px;
+}
+.back-btn {
+    background: #1f4f33;
+    color: #fff;
+    padding: 12px 30px;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+.back-btn:hover {
+    background: #347a4d;
+    color: #fdf5d4;
+}
+</style>
+
+<div class="success-container">
+    <h2>🎉 Registration Successful!</h2>
+    <p>Thank you for enrolling in <strong>{{ course.title }}</strong>.<br>
+    We’ll reach out to you soon with more details.</p>
+
+    <a href="{% url 'courses' %}" class="back-btn">← Back to Courses</a>
+</div>
+
+{% endblock %}

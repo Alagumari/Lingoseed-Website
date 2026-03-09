@@ -1,0 +1,216 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Signup</title>
+    <style>
+        body {
+            background: #fcefc4;
+            font-family: 'open sans',sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 70%;
+            margin: 50px auto;
+            display: flex;
+            border-radius: 25px;
+            background: #fff;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .left {
+            width: 50%;
+            padding: 20px;
+        }
+
+        .right {
+            width: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .right img {
+            width: 100%;
+            border-radius: 20px;
+            object-fit: cover;
+        }
+
+        .input-box {
+            width: 80%;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            background: #1E5132;
+            color: white;
+            font-size: 18px;
+            border-radius: 30px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: rgb(127, 194, 11);
+        }
+
+        .link {
+            text-align: center;
+            margin-top: 10px;
+            
+        }
+
+        .link a {
+            color: black;
+            text-decoration: none;
+            
+        }
+
+        /* 💡 Responsive for tablets and mobiles */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                width: 90%;
+                padding: 20px;
+            }
+
+            .left, .right {
+                width: 100%;
+                padding: 10px;
+            }
+
+            .right img {
+                width: 100%;
+                height: auto;
+                margin-top: 20px;
+            }
+
+            .btn {
+                font-size: 16px;
+                padding: 10px;
+            }
+
+            .input-box {
+                font-size: 15px;
+                padding: 12px;
+            }
+        }
+
+        /* 💡 Extra small screens (mobile under 480px) */
+        @media (max-width: 480px) {
+            h2 {
+                font-size: 22px;
+            }
+
+            .container {
+                padding: 15px;
+                border-radius: 15px;
+            }
+
+            .btn {
+                font-size: 15px;
+                padding: 10px;
+            }
+
+            .input-box {
+                font-size: 14px;
+                padding: 10px;
+            }
+    /* 🔴 Fix: correct class selector for messages */
+.error-message {
+    color: #d93025 !important;           /* strong red */
+    font-size: 15px;
+    font-weight: 600;
+    margin-top: 6px;
+    margin-bottom: 6px;
+    display: block;
+    background: #fff !important;         /* ensures red is visible */
+    padding: 4px 6px;
+    border-radius: 4px;
+}
+
+.success-message {
+    color: #2e7d32 !important;           /* green for success */
+    font-size: 15px;
+    font-weight: 600;
+    display: block;
+    background: #fff !important;
+    padding: 4px 6px;
+    border-radius: 4px;
+}
+
+/* Ensure parent area doesn't force white text */
+.left {
+    color: #000 !important;
+    background: #fff !important;
+}
+
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left">
+            <h2 style="text-align:center;color:#1E5132;">Signup</h2>
+
+            <form method="POST">{% csrf_token %}
+                <!-- <input type="text" placeholder="Enter Username" name="username" class="input-box" required> -->
+                <input type="email" placeholder="Enter Your Email Id" name="email" class="input-box" required>
+                <input type="password" placeholder="Enter Your Password" name="password" class="input-box" required><br>
+                <input type="checkbox" style="margin-bottom: 20px;color:#1E5132;" required> I Agree To The Terms & Policy
+
+                <button class="btn">SIGNUP</button>
+
+                <div class="link">
+                    <a href="{% url 'login' %}">Login</a> | 
+                    <a href="{% url 'forgot_password' %}">Forget Password</a><br><br>
+                    (Or)<br>
+                    <button type="button" class="input-box" style="background:#f2f2f2;cursor:pointer;border-radius: 15px;color: #1E5132;width: auto;">Continue With Google</button>
+                </div>
+            </form>
+            {% if messages %}
+            <div style="text-align:center; margin-top:15px;">
+                {% for message in messages %}
+                    <small class="{% if message.tags == 'error' %}error-message{% else %}success-message{% endif %}">
+                        {{ message }}
+                    </small>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+
+            
+
+       
+
+        <div class="right">
+            <img src="{% static 'images/l.png' %}" alt="Signup Image">
+        </div>
+    </div>
+    <script>
+document.querySelector("form").addEventListener("submit", function(e) {
+  const emailInput = document.querySelector("input[name='email']");
+  const emailValue = emailInput.value.trim();
+  const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  
+  if (!pattern.test(emailValue)) {
+    e.preventDefault();
+    alert("Please enter a valid email address");
+    emailInput.focus();
+  }
+});
+</script>
+
+</body>
+</html>
